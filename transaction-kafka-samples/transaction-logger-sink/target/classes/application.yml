@@ -1,0 +1,15 @@
+#spring.cloud.stream.binding.process-in-0.consumer.batch-mode=: rue
+spring:
+  cloud:
+    stream:
+      bindings:
+        process-in-0:
+          destination: person-event
+          consumer: 
+              batch-mode: true
+      kafka:
+          binder:
+              configuration:
+                isolation.level: read_committed
+
+server.port: 9999

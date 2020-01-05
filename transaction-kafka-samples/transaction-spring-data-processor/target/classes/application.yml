@@ -1,0 +1,38 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        process-in-0:
+          destination: person-command
+          consumer:
+#            maxAttempts: 1
+            batch-mode: true
+            properties:
+               maxPollRecords: 10
+               minFetchBytes: 5000
+               fetchMaxWaitMs: 1000
+        process-out-0:
+          destination: person-event
+      kafka:
+        binder:
+          transaction:
+            transaction-id-prefix: person-
+            producer:
+              configuration:
+                retries: 1
+                acks: all
+
+  datasource:
+#    url: jdbc:mariadb://localhost:3306/sample_mysql_db
+#    username: root
+#    password: pwd
+#    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+server.port: 9998
